@@ -1,0 +1,153 @@
+/* ===== Overlay ===== */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;     /* popup thoda upar */
+  padding-top: 100px;
+  z-index: 2000;
+}
+
+/* ===== Popup Card ===== */
+.popup-card {
+  width: 92%;
+  max-width: 360px;
+  background: #eaf5f5;
+  border-radius: 16px;
+  padding: 14px;
+  position: relative;
+  border: 2px solid #9fd3d3;   /* image jaisa border */
+}
+
+/* ===== Close Button ===== */
+.popup-close {
+  position: absolute;
+      top: 5px;      /* 🔥 heading ke upar */
+       right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6fa9a9;
+}
+
+/* ===== Heading ===== */
+.popup-card h3 {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0e4a63;              /* image jaisa */
+}
+
+/* ===== Voucher Box ===== */
+.voucher-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+
+/* Brand Logo */
+.voucher-box img {
+  height: 44px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+/* Brand Name */
+.voucher-box h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #5f7f7f;
+  margin: 6px 0;
+}
+
+/* ===== Ticket Style Separator ===== */
+.voucher-separator {
+  position: relative;
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Dashed Line */
+.dashed-line {
+  width: 100%;
+  border-top: 1.5px dashed #d0d0d0;
+}
+
+/* Half Circle Cuts */
+.cut {
+  width: 14px;
+  height: 14px;
+  background: #eaf5f5;        /* popup bg color */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Left Cut */
+/* left cut */
+.cut.left {
+  left: -20px;
+}
+
+/* right cut */
+.cut.right {
+  right: -20px;
+}
+
+/* ===== Amount ===== */
+.amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0da7a7;
+  margin: 10px 0;
+}
+
+/* ===== Redeem Button ===== */
+.redeem-main {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: #0da7a7;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ===== Redemption Process ===== */
+.process {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+/* Process Title */
+.process h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0e4a63;
+}
+
+/* Steps */
+.process ol {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.process ol li {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 10px;        /* gap between 1,2,3,4,5 */
+  line-height: 1.4;
+}

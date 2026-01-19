@@ -1,0 +1,242 @@
+/* GLOBAL */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* MAIN PAGE */
+.reward-page {
+  min-height: 100vh;
+  background: #eaf5f5;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* HEADER */
+.reward-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-brand-logo {
+  height: 34px;
+  object-fit: contain;
+}
+
+.balance-box {
+  background: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #0da7a7;
+}
+
+.balance-box span {
+  font-size: 12px;
+  color: #5f7f7f;
+}
+
+/* CONTENT */
+.reward-content {
+  padding: 16px 12px;
+}
+
+.reward-page h2 {
+  color: #0e4a63;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+/* INFINITE AUTOPLAY CENTER ZOOM CAROUSEL */
+.infinite-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 25px;
+  width: max-content;
+  animation: autoSlide 22s linear infinite;
+}
+
+@keyframes autoSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.carousel-card {
+  min-width: 240px;
+  height: 130px;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+  transform: scale(1);
+  transition: transform 0.4s ease;
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-card.active {
+  transform: scale(1.18);
+  z-index: 5;
+}
+
+/* SEARCH */
+.search {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  background: #ffffff;
+  margin: 14px 0;
+  outline: none;
+}
+
+.search:focus {
+  border-color: #0da7a7;
+  box-shadow: 0 0 0 2px rgba(13, 167, 167, 0.15);
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 0 -12px 14px;
+  padding: 0 12px;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #5f7f7f;
+  font-size: 13px;
+  border: none;
+  background: white;
+  white-space: nowrap;
+}
+
+.tabs .active {
+  background: #0da7a7;
+  color: white;
+}
+
+/* BRAND GRID */
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.brand-card {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.brand-image {
+  height: 50px;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.placeholder {
+  background: #ddd;
+  border-radius: 6px;
+}
+
+.brand-card h4 {
+  margin: 6px 0;
+  color: rgb(50, 120, 150);
+}
+
+/* ⭐ NEW — LABEL MATCHES TRUVISH STYLE */
+.select-label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  display: block;
+  color: #1D2E39;       /* Dark Slate Grey */
+  font-weight: 600;
+  text-align: left;
+}
+
+/* ⭐ UPDATED — AMOUNT BOX IN TRUVISH BRAND THEME */
+.amount-box {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  margin: 8px 0 10px;
+
+  border: 1.5px solid #0da7a7;    /* Cyan Teal */
+  border-radius: 10px;
+
+  background: #F3F7FA;            /* Soft White */
+  font-size: 14px;
+  font-weight: 600;
+  color: #0E4A63;                 /* Deep Teal */
+}
+
+.amount-box:focus {
+  /*border-color: #0E4A63;*/
+  box-shadow: 0 0 0 2px rgba(26, 176, 183, 0.25);
+}
+
+/* Redeem Button */
+.redeem-btn {
+  width: 100%;
+  background: #0da7a7;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+/* STICKY SEARCH + TABS */
+.sticky-filter {
+  position: sticky;
+  top: 70px;
+  z-index: 999;
+  background: #eaf5f5;
+  padding-top: 6px;
+  padding-bottom: 8px;
+}

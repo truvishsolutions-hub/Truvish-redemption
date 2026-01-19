@@ -1,0 +1,134 @@
+/* REMOVE ANY WHITE EDGE */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #cfe4e6;
+}
+
+/* ROOT */
+.redeem-card {
+  min-height: 100vh;
+  background: #cfe4e6;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* TOP IMAGE */
+.redeem-card__top-image {
+  height: 38vh;
+  background-size: cover;
+  background-position: center;
+}
+
+/* CARD WRAPPER */
+.redeem-card__card-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: -60px;              /* 🔥 card thoda upar */
+  padding: 0 16px 40px;
+}
+
+/* CARD */
+.redeem-card__card {
+  width: 100%;
+  max-width: 360px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 24px 24px;   /* 🔥 top padding kam */
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+
+/* LOGO */
+/* LOGO – FIXED FOR ALL TYPES OF LOGOS */
+.redeem-card__logo {
+  max-width: 85%;        /* card ke bahar na jaye */
+  max-height: 90px;      /* 🔥 HEIGHT FIX (MOST IMPORTANT) */
+
+  width: auto;           /* natural width */
+  height: auto;          /* natural height */
+
+  display: block;
+  margin: 6px auto 12px; /* balanced spacing */
+
+  object-fit: contain;   /* logo crop na ho */
+}
+
+
+
+/* TITLE */
+.redeem-card__title {
+  font-size: 22px;
+  color: #0e4a63;
+  margin: 0 0 10px;         /* 🔥 top margin = 0 */
+  font-weight: 600;
+}
+
+
+/* AMOUNT */
+.redeem-card__amount {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1aa6a6;
+  margin-bottom: 8px;
+}
+
+/* SUB TEXT */
+.redeem-card__sub-text {
+  font-size: 15px;
+  font-weight: 500;
+   color: #0e4a63;
+  margin-bottom: 6px;
+}
+
+/* DESC */
+.redeem-card__desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+/* VERIFIED */
+.redeem-card__verified {
+  border: 1px solid #bfe7e7;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1aa6a6;
+  margin-bottom: 14px;
+}
+
+/* PRIMARY BUTTON */
+.redeem-card__primary-btn {
+  width: 100%;
+  padding: 13px;
+  background: #1aa6a6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.redeem-card__primary-btn:hover {
+  background: #148c8c;
+}
+
+/* HINT */
+.redeem-card__hint {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+/* BOTTOM LOGO */
+.redeem-card__bottom-logo {
+  width: 72px;
+  display: block;
+  margin: -26px auto 16px;        /* 🔥 thoda upar */
+}
