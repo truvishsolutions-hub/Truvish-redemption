@@ -2,45 +2,70 @@ import React, { useState } from "react";
 import "./RedeemPopup.css";
 import RedeemDetailsPopup from "./RedeemDetailsPopup";
 
-const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
-  if (!brand) return null;
+// ✅ Railway Backend URL
+const BASE_URL = "https://grateful-warmth-production-b64e.up.railway.app";
 
+const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
   const [voucherDetails, setVoucherDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  if (!brand) return null;
+
   const steps = Array.isArray(brand.redemptionProcess)
     ? brand.redemptionProcess
-    : brand.redemptionProcess?.split(/\r?\n|,/).filter(Boolean);
+    : String(brand.redemptionProcess || "")
+        .split(/\r?\n|,/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+  // ✅ helper for image url
+  const cleanUrl = (url) => {
+    if (!url) return "";
+
+    let u = String(url).trim().replace(/['"]/g, "").replace(/ /g, "%20");
+
+    // already full url
+    if (u.startsWith("http://") || u.startsWith("https://")) {
+      return u;
+    }
+
+    // remove starting slash if any
+    u = u.replace(/^\/+/, "");
+
+    return `${BASE_URL}/${u}`;
+  };
 
   const handleRedeem = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
+
       const params = new URLSearchParams({
-        code: truvishCode,
-        phone: phone,
+        code: truvishCode || "",
+        phone: phone || "",
         inventoryId: brand.inventoryId,
-        selectedValue: brand.selectedValue    // ⭐ send selected value
+        selectedValue: brand.selectedValue,
       });
 
       const res = await fetch(
-        `http://localhost:8080/api/redeem?${params.toString()}`,
-        { method: "POST" }
+        `${BASE_URL}/api/redeem?${params.toString()}`,
+        {
+          method: "POST",
+        }
       );
 
       if (!res.ok) {
         const msg = await res.text();
-        throw new Error(msg);
+        throw new Error(msg || "Redeem failed");
       }
 
       const text = await res.text();
-      const data = JSON.parse(text);
+      const data = text ? JSON.parse(text) : {};
 
-      // ⭐ FINAL FIX — Attach selected value into popup data
+      // ✅ selected value popup me bhi rahe
       setVoucherDetails({
         ...data,
-        selectedValue: brand.selectedValue
+        selectedValue: brand.selectedValue,
       });
-
     } catch (err) {
       alert(err.message || "Redeem failed");
     } finally {
@@ -52,14 +77,19 @@ const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
     <>
       <div className="popup-overlay">
         <div className="popup-card">
-          <button className="popup-close" onClick={onClose}>✕</button>
+          <button className="popup-close" onClick={onClose}>
+            ✕
+          </button>
 
           <h3>How to redeem this voucher</h3>
 
           <div className="voucher-box">
             <img
-              src={brand.inventoryVoucherLogoUrl}
+              src={cleanUrl(brand.inventoryVoucherLogoUrl)}
               alt={brand.inventoryVoucherName}
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
             />
 
             <h4>{brand.inventoryVoucherName}</h4>
@@ -70,7 +100,6 @@ const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
               <span className="cut right"></span>
             </div>
 
-            {/* ⭐ Show the selected value here */}
             <div className="amount">
               INR {brand.selectedValue}
             </div>
@@ -87,7 +116,7 @@ const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
           <div className="process">
             <h4>Redemption Process</h4>
             <ol>
-              {steps?.map((step, index) => (
+              {steps.map((step, index) => (
                 <li key={index}>{step}</li>
               ))}
             </ol>
@@ -95,7 +124,6 @@ const RedeemPopup = ({ brand, onClose, truvishCode, phone }) => {
         </div>
       </div>
 
-      {/* Final Popup */}
       <RedeemDetailsPopup
         voucher={voucherDetails}
         onClose={() => setVoucherDetails(null)}

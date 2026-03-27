@@ -24,7 +24,7 @@ html, body {
 .redeem-card__card-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: -60px;              /* 🔥 card thoda upar */
+  margin-top: -60px;
   padding: 0 16px 40px;
 }
 
@@ -34,37 +34,36 @@ html, body {
   max-width: 360px;
   background: #ffffff;
   border-radius: 18px;
-  padding: 18px 24px 24px;   /* 🔥 top padding kam */
+  padding: 18px 24px 24px;
   text-align: center;
   box-shadow: 0 12px 32px rgba(0,0,0,0.15);
 }
 
 
-/* LOGO */
-/* LOGO – FIXED FOR ALL TYPES OF LOGOS */
+/* 🔥 LOGO – PERFECT CIRCLE (EDGE TO EDGE) */
 .redeem-card__logo {
-  max-width: 85%;        /* card ke bahar na jaye */
-  max-height: 90px;      /* 🔥 HEIGHT FIX (MOST IMPORTANT) */
+  width: 100px;
+  height: 100px;
 
-  width: auto;           /* natural width */
-  height: auto;          /* natural height */
+  border-radius: 50%;      /* circle */
+  object-fit: cover;       /* full fill (NO GAP) */
 
   display: block;
-  margin: 6px auto 12px; /* balanced spacing */
+  margin: 6px auto 12px;
 
-  object-fit: contain;   /* logo crop na ho */
+  padding: 0;
+  border: none;
+  background: transparent;
 }
-
 
 
 /* TITLE */
 .redeem-card__title {
   font-size: 22px;
   color: #0e4a63;
-  margin: 0 0 10px;         /* 🔥 top margin = 0 */
+  margin: 0 0 10px;
   font-weight: 600;
 }
-
 
 /* AMOUNT */
 .redeem-card__amount {
@@ -78,7 +77,7 @@ html, body {
 .redeem-card__sub-text {
   font-size: 15px;
   font-weight: 500;
-   color: #0e4a63;
+  color: #0e4a63;
   margin-bottom: 6px;
 }
 
@@ -130,5 +129,5 @@ html, body {
 .redeem-card__bottom-logo {
   width: 72px;
   display: block;
-  margin: -26px auto 16px;        /* 🔥 thoda upar */
+  margin: -26px auto 16px;
 }

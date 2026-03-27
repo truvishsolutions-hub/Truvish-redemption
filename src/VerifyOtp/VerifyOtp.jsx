@@ -10,16 +10,38 @@ const VerifyOtp = ({ phone, onChangeNumber, onOtpVerified }) => {
   const handleChange = (value, index) => {
     if (!/^\d?$/.test(value)) return;
 
-    const next = [...otp];
-    next[index] = value;
-    setOtp(next);
+    const nextOtp = [...otp];
+    nextOtp[index] = value;
+    setOtp(nextOtp);
 
-    if (value && index < next.length - 1) {
-      inputsRef.current[index + 1].focus();
+    if (value && index < nextOtp.length - 1) {
+      inputsRef.current[index + 1]?.focus();
     }
   };
 
-  // 🔥 ONLY ADDITION
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
+    if (!pastedData) return;
+
+    const pastedOtp = pastedData.slice(0, 4).split("");
+    const nextOtp = ["", "", "", ""];
+
+    pastedOtp.forEach((digit, index) => {
+      nextOtp[index] = digit;
+    });
+
+    setOtp(nextOtp);
+
+    const focusIndex = Math.min(pastedOtp.length, 3);
+    inputsRef.current[focusIndex]?.focus();
+  };
+
   const handleVerify = () => {
     const enteredOtp = otp.join("");
 
@@ -28,56 +50,48 @@ const VerifyOtp = ({ phone, onChangeNumber, onOtpVerified }) => {
       return;
     }
 
-    // 👉 Abhi dummy verify (later backend se connect kar sakte ho)
-    onOtpVerified();   // 🔥 VERY IMPORTANT
+    onOtpVerified();
   };
 
   return (
     <div className="verify-otp">
-
-      {/* TOP IMAGE */}
       <div
         className="verify-otp__top-image"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
 
-      {/* CARD */}
       <div className="verify-otp__card-wrapper">
         <div className="verify-otp__card">
-
           <img src={logo} alt="Truvish" className="verify-otp__logo" />
 
-          <h2 className="verify-otp__title">
-            Verify Your Phone Number
-          </h2>
+          <h2 className="verify-otp__title">Verify Your Phone Number</h2>
 
           <p className="verify-otp__sub-text">
-            Enter the 4-Digits code sent to your phone
+            Enter the 4-digit code sent to your phone
           </p>
 
-          <label className="verify-otp__label">
-            Enter OTP Code
-          </label>
+          <label className="verify-otp__label">Enter OTP Code</label>
 
-          {/* OTP BOXES (4) */}
           <div className="verify-otp__inputs">
-            {otp.map((d, i) => (
+            {otp.map((digit, index) => (
               <input
-                key={i}
-                ref={(el) => (inputsRef.current[i] = el)}
+                key={index}
+                ref={(el) => (inputsRef.current[index] = el)}
                 type="text"
-                maxLength="1"
-                value={d}
-                onChange={(e) => handleChange(e.target.value, i)}
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleChange(e.target.value, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                onPaste={handlePaste}
               />
             ))}
           </div>
 
           <span className="verify-otp__sent">
-            Sent to +91{phone || "XXXXXXXXXX"}
+            Sent to +91 {phone || "XXXXXXXXXX"}
           </span>
 
-          {/* ✅ UPDATED BUTTON */}
           <button
             className="verify-otp__primary-btn"
             onClick={handleVerify}
@@ -85,17 +99,20 @@ const VerifyOtp = ({ phone, onChangeNumber, onOtpVerified }) => {
             Verify & Continue
           </button>
 
-          <button className="verify-otp__resend">
+          <button
+            type="button"
+            className="verify-otp__resend"
+          >
             Resend OTP
           </button>
 
           <button
+            type="button"
             className="verify-otp__change"
             onClick={onChangeNumber}
           >
             ⟳ Change Phone Number
           </button>
-
         </div>
       </div>
     </div>

@@ -1,20 +1,19 @@
-/* GLOBAL */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
 
-/* MAIN PAGE */
 .reward-page {
   min-height: 100vh;
   background: #eaf5f5;
   padding: 0;
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
-/* HEADER */
 .reward-header {
   position: sticky;
   top: 0;
@@ -26,37 +25,48 @@ html, body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
+  box-sizing: border-box;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
+  min-width: 48px;
 }
 
 .header-brand-logo {
-  height: 34px;
-  object-fit: contain;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #eef8f8;
 }
 
 .balance-box {
-  background: white;
+  background: #ffffff;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
-  font-weight: 600;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  border: 1px solid rgba(13, 167, 167, 0.18);
   color: #0da7a7;
+  line-height: 1.2;
+  box-shadow: 0 4px 12px rgba(13, 167, 167, 0.08);
 }
 
 .balance-box span {
   font-size: 12px;
   color: #5f7f7f;
+  font-weight: 500;
 }
 
-/* CONTENT */
 .reward-content {
-  padding: 16px 12px;
+  padding: 16px 12px 28px;
+  box-sizing: border-box;
 }
 
 .reward-page h2 {
@@ -64,6 +74,7 @@ html, body {
   font-weight: 600;
   text-align: center;
   margin-top: 16px;
+  margin-bottom: 6px;
 }
 
 .subtitle {
@@ -72,64 +83,98 @@ html, body {
   margin-bottom: 12px;
 }
 
-/* INFINITE AUTOPLAY CENTER ZOOM CAROUSEL */
-.infinite-carousel {
+/* =========================
+   EMBLA BANNER FINAL STABLE
+========================= */
+.embla-banner-section {
   width: 100%;
-  overflow: hidden;
-  position: relative;
-  padding: 20px 0;
+  padding: 10px 0 18px;
 }
 
-.carousel-track {
+.embla {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 18px;
+}
+
+.embla__container {
   display: flex;
-  gap: 25px;
-  width: max-content;
-  animation: autoSlide 22s linear infinite;
 }
 
-@keyframes autoSlide {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  position: relative;
 }
 
-.carousel-card {
-  min-width: 240px;
-  height: 130px;
-  border-radius: 16px;
+.embla__slide__inner {
+  width: 100%;
+  height: 170px;
   overflow: hidden;
-  flex-shrink: 0;
-  transform: scale(1);
-  transition: transform 0.4s ease;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
-.carousel-card img {
+.embla__slide__inner img {
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
 }
 
-.carousel-card.active {
-  transform: scale(1.18);
-  z-index: 5;
+.embla__slide__inner.is-active {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* SEARCH */
+.embla__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.embla__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: none;
+  background: #bfdede;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.embla__dot.active {
+  width: 24px;
+  background: #0da7a7;
+}
+
+/* =========================
+   SEARCH + TABS
+========================= */
 .search {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
+  padding: 11px 14px;
+  border-radius: 14px;
   border: 1.5px solid transparent;
   background: #ffffff;
   margin: 14px 0;
   outline: none;
+  box-sizing: border-box;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 
 .search:focus {
   border-color: #0da7a7;
-  box-shadow: 0 0 0 2px rgba(13, 167, 167, 0.15);
+  box-shadow: 0 0 0 3px rgba(13, 167, 167, 0.14);
 }
 
-/* TABS */
 .tabs {
   display: flex;
   gap: 8px;
@@ -144,94 +189,236 @@ html, body {
 }
 
 .tabs button {
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: 7px 12px;
+  border-radius: 10px;
   color: #5f7f7f;
   font-size: 13px;
   border: none;
-  background: white;
+  background: #ffffff;
   white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: 0.2s ease;
 }
 
 .tabs .active {
   background: #0da7a7;
   color: white;
+  box-shadow: 0 4px 12px rgba(13, 167, 167, 0.25);
 }
 
-/* BRAND GRID */
 .brand-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+  align-items: start;
+  overflow: visible;
 }
 
 .brand-card {
-  background: white;
-  border-radius: 14px;
-  padding: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 12px 12px;
   text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(13, 167, 167, 0.05);
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-card.dropdown-open-card {
+  z-index: 50;
 }
 
 .brand-image {
-  height: 50px;
-  max-width: 100%;
-  object-fit: contain;
-  margin-bottom: 10px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
+  background: #ffffff;
+  border: 2px solid #eef7f7;
 }
 
 .placeholder {
+  width: 72px;
+  height: 72px;
   background: #ddd;
-  border-radius: 6px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
 }
 
 .brand-card h4 {
-  margin: 6px 0;
+  margin: 6px 0 10px;
   color: rgb(50, 120, 150);
+  font-size: 15px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ⭐ NEW — LABEL MATCHES TRUVISH STYLE */
+.select-wrapper {
+  background: #f8fcfc;
+  border: 1.5px solid #d8eeee;
+  border-radius: 14px;
+  padding: 8px;
+  margin: 8px 0 12px;
+  transition: 0.25s ease;
+  position: relative;
+  overflow: visible;
+  z-index: 5;
+}
+
+.select-wrapper.selected {
+  border-color: #0da7a7;
+  background: #f2ffff;
+  box-shadow: 0 6px 14px rgba(13, 167, 167, 0.12);
+}
+
+.select-wrapper.open {
+  border-color: #0da7a7;
+  background: #f2ffff;
+  box-shadow: 0 10px 24px rgba(13, 167, 167, 0.16);
+}
+
 .select-label {
-  font-size: 13px;
-  margin-bottom: 5px;
+  font-size: 12px;
+  margin-bottom: 6px;
   display: block;
-  color: #1D2E39;       /* Dark Slate Grey */
+  color: #0e4a63;
   font-weight: 600;
   text-align: left;
+  padding-left: 2px;
 }
 
-/* ⭐ UPDATED — AMOUNT BOX IN TRUVISH BRAND THEME */
 .amount-box {
   width: 100%;
-  height: 40px;
+  min-height: 42px;
   padding: 0 12px;
-  margin: 8px 0 10px;
-
-  border: 1.5px solid #0da7a7;    /* Cyan Teal */
+  border: 1.5px solid #bfe7e7;
   border-radius: 10px;
-
-  background: #F3F7FA;            /* Soft White */
+  background: #ffffff;
   font-size: 14px;
   font-weight: 600;
-  color: #0E4A63;                 /* Deep Teal */
+  color: #0e4a63;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-.amount-box:focus {
-  /*border-color: #0E4A63;*/
-  box-shadow: 0 0 0 2px rgba(26, 176, 183, 0.25);
+.custom-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-/* Redeem Button */
+.custom-dropdown-trigger.open {
+  border-color: #0da7a7;
+  box-shadow: 0 0 0 3px rgba(13, 167, 167, 0.16);
+}
+
+.custom-dropdown-trigger.has-value {
+  color: #0e4a63;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  color: #0da7a7;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #d8eeee;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 220px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px) scaleY(0.96);
+  transform-origin: top center;
+  transition: opacity 0.22s ease, transform 0.26s ease, visibility 0.22s ease;
+  z-index: 100;
+}
+
+.custom-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scaleY(1);
+}
+
+.custom-dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb {
+  background: #c7e8e8;
+  border-radius: 10px;
+}
+
+.dropdown-option {
+  width: 100%;
+  border: none;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 11px 12px;
+  text-align: left;
+  color: #0e4a63;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d8eeee;
+  transition: all 0.2s ease;
+}
+
+.dropdown-option:hover {
+  background: #ebffff;
+  border-color: #0da7a7;
+}
+
+.dropdown-option.active {
+  background: #0da7a7;
+  color: #ffffff;
+  border-color: #0da7a7;
+  box-shadow: 0 6px 14px rgba(13, 167, 167, 0.22);
+}
+
 .redeem-btn {
   width: 100%;
-  background: #0da7a7;
-  color: white;
+  background: #b9dede;
+  color: #ffffff;
   border: none;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 6px;
+  padding: 11px;
+  border-radius: 11px;
+  margin-top: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-/* STICKY SEARCH + TABS */
+.redeem-btn.enabled,
+.redeem-btn:hover {
+  background: #0da7a7;
+  box-shadow: 0 6px 14px rgba(13, 167, 167, 0.22);
+}
+
 .sticky-filter {
   position: sticky;
   top: 70px;
@@ -239,4 +426,67 @@ html, body {
   background: #eaf5f5;
   padding-top: 6px;
   padding-bottom: 8px;
+}
+
+@media (max-width: 480px) {
+  .reward-header {
+    padding: 10px 12px;
+  }
+
+  .header-brand-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .balance-box {
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+
+  .balance-box span {
+    font-size: 11px;
+  }
+
+  .reward-content {
+    padding: 14px 10px 28px;
+  }
+
+  .embla__slide__inner {
+    height: 140px;
+    border-radius: 16px;
+  }
+
+  .brand-grid {
+    gap: 12px;
+  }
+
+  .brand-card {
+    padding: 12px 10px 10px;
+  }
+
+  .brand-image,
+  .placeholder {
+    width: 64px;
+    height: 64px;
+  }
+
+  .brand-card h4 {
+    font-size: 14px;
+    min-height: 34px;
+  }
+
+  .amount-box {
+    min-height: 40px;
+    font-size: 13px;
+  }
+
+  .dropdown-option {
+    font-size: 12px;
+    padding: 10px 11px;
+  }
+
+  .redeem-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
