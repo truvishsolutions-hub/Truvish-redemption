@@ -13,7 +13,7 @@
 
 /* 🔴 TOP IMAGE */
 .top-image {
-  height: 38vh;               /* image sirf thoda sa */
+  height: 38vh; /* image sirf thoda sa */
   background-size: cover;
   background-position: center;
 }
@@ -22,7 +22,7 @@
 .card-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: -50px;          /* 🔥 bas thoda sa touch image se */
+  margin-top: -50px; /* 🔥 bas thoda sa touch image se */
   padding: 0 16px 40px;
 }
 
@@ -34,7 +34,7 @@
   border-radius: 16px;
   padding: 24px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* LOGO */
@@ -56,14 +56,16 @@
   margin-bottom: 20px;
 }
 
-/* INPUT */
-/*.card input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 16px;
-}*/
+/* LABEL */
+.input-label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0e4a63;
+  margin-bottom: 6px;
+  padding-left: 5px;
+}
 
 /* CODE INPUT WRAPPER */
 .code-input {
@@ -74,27 +76,35 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* INPUT */
+/* INPUT TEXT FINAL UPDATE */
 .code-input input {
   width: 100%;
   border: none;
   outline: none;
-  font-size: 14px;
+  background: transparent;
+
+  font-size: 20px;
+  font-weight: 800;
+  color: #0e4a63;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  text-align: center; /* text beech se start hoga */
 }
-/*
-.code-input input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 20px;   // 🔥 Text bada ho gaya
-  font-weight: 500;
-  color: #0E4A63;    // TruVish deep blue
-  height: 20px;      // Box size same rakhta hai
+
+/* PLACEHOLDER TEXT */
+.code-input input::placeholder {
+  color: #1ab0b7;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+  opacity: 0.75;
 }
-*/
+
 /* 🔵 TRUVISH FOCUS EFFECT */
 .code-input:focus-within {
-  border-color: #1aa6a6;  /* TruVish blue */
+  border-color: #1aa6a6; /* TruVish blue */
   box-shadow: 0 0 0 1px rgba(26, 166, 166, 0.4);
 }
 
@@ -114,21 +124,15 @@
   background: #148c8c;
 }
 
+.card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 /* FOOTER */
 .trusted {
   display: block;
   margin-top: 14px;
   font-size: 12px;
   color: #777;
-}
-
-/* LABEL */
-.input-label {
-  display: block;
-  text-align: left;
-  font-size: 13px;
-  font-weight: 500;
-  color: #0e4a63;
-  margin-bottom: 6px;
-  padding-left:5px;
 }

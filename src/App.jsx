@@ -4,60 +4,59 @@ import VerifyOtp from "./VerifyOtp/VerifyOtp";
 import TruvCod from "./CodeEnter/TruvCod";
 import RedeemCard from "./RewardVal/RewardCard";
 import ChooseReward from "./ChooseReward/ChooseReward";
+import RedemptionHistory from "./ChooseReward/RedemptionHistory";
 
 const App = () => {
-  // ✅ Current page state
   const [page, setPage] = useState("code");
-
-  // ✅ User phone number
   const [phone, setPhone] = useState("");
-
-  // ✅ If code already used, existing phone from backend
   const [existingPhone, setExistingPhone] = useState(null);
-
-  // ✅ User entered TruVish code
   const [truvishCode, setTruvishCode] = useState(null);
-
-  // ✅ Theme image from backend
   const [clientThemeImg, setClientThemeImg] = useState(null);
-
-  // ✅ Reward data from backend
   const [rewardValue, setRewardValue] = useState(null);
   const [brandLogo, setBrandLogo] = useState(null);
   const [validity, setValidity] = useState(null);
-
-  // ✅ NEW: Store client categories and brands
   const [clientCategories, setClientCategories] = useState([]);
   const [clientBrands, setClientBrands] = useState([]);
 
+  const resetFlowData = () => {
+    setPhone("");
+    setExistingPhone(null);
+    setTruvishCode(null);
+    setClientThemeImg(null);
+    setRewardValue(null);
+    setBrandLogo(null);
+    setValidity(null);
+    setClientCategories([]);
+    setClientBrands([]);
+  };
+
+  const handleCodeSuccess = (data) => {
+    setExistingPhone(data.existingPhone || null);
+    setRewardValue(data.value || 0);
+    setBrandLogo(data.clientImg || null);
+    setValidity(data.validity || null);
+    setClientThemeImg(data.clientThemeImg || null);
+    setClientCategories(data.clientCategory || []);
+    setClientBrands(data.clientBrand || []);
+    setTruvishCode(data.code || null);
+    setPage("mobile");
+  };
+
+  const handleBalanceUpdate = (newBalance) => {
+    setRewardValue(Number(newBalance || 0));
+  };
+
   return (
     <>
-      {/* ---------------- STEP 1: ENTER CODE ---------------- */}
-      {page === "code" && (
-        <TruvCod
-          onSuccess={(data) => {
-            setExistingPhone(data.existingPhone || null);
-            setRewardValue(data.value || null);
-            setBrandLogo(data.clientImg || null);
-            setValidity(data.validity || null);
-            setClientThemeImg(data.clientThemeImg || null);
+      {page === "code" && <TruvCod onSuccess={handleCodeSuccess} />}
 
-            // ✅ NEW: Store categories and brands
-            setClientCategories(data.clientCategory || []);
-            setClientBrands(data.clientBrand || []);
-
-            setTruvishCode(data.code || null);
-
-            setPage("mobile");
-          }}
-        />
-      )}
-
-      {/* ---------------- STEP 2: ENTER MOBILE ---------------- */}
       {page === "mobile" && (
         <EnterMobile
           existingPhone={existingPhone}
-          onBack={() => setPage("code")}
+          onBack={() => {
+            resetFlowData();
+            setPage("code");
+          }}
           onSendOtp={(mobile) => {
             setPhone(mobile);
             setPage("otp");
@@ -65,7 +64,6 @@ const App = () => {
         />
       )}
 
-      {/* ---------------- STEP 3: VERIFY OTP ---------------- */}
       {page === "otp" && (
         <VerifyOtp
           phone={phone}
@@ -74,7 +72,6 @@ const App = () => {
         />
       )}
 
-      {/* ---------------- STEP 4: SHOW REWARD CARD ---------------- */}
       {page === "redeem" && (
         <RedeemCard
           phone={phone}
@@ -86,16 +83,25 @@ const App = () => {
         />
       )}
 
-      {/* ---------------- STEP 5: CHOOSE REWARD PAGE ---------------- */}
       {page === "chooseReward" && (
         <ChooseReward
           rewardValue={rewardValue}
           brandLogo={brandLogo}
           truvishCode={truvishCode}
           phone={phone}
-          clientCategories={clientCategories}  // ✅ Pass categories
-          clientBrands={clientBrands}          // ✅ Pass brands
+          clientCategories={clientCategories}
+          clientBrands={clientBrands}
+          onBalanceUpdate={handleBalanceUpdate}
           onBack={() => setPage("redeem")}
+          onCodeHistory={() => setPage("history")}
+        />
+      )}
+
+      {page === "history" && (
+        <RedemptionHistory
+          phone={phone}
+          truvishCode={truvishCode}
+          onBack={() => setPage("chooseReward")}
         />
       )}
     </>

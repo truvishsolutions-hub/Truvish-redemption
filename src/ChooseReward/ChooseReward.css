@@ -1,4 +1,3 @@
-html,
 body {
   margin: 0;
   padding: 0;
@@ -32,7 +31,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-width: 48px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  position: relative;
 }
 
 .header-brand-logo {
@@ -56,12 +62,100 @@ body {
   color: #0da7a7;
   line-height: 1.2;
   box-shadow: 0 4px 12px rgba(13, 167, 167, 0.08);
+  margin-right: 4px;
 }
 
 .balance-box span {
   font-size: 12px;
   color: #5f7f7f;
   font-weight: 500;
+}
+
+.burger-menu {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #f4fbfb;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(13, 167, 167, 0.1);
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.burger-menu:hover {
+  background: #ebffff;
+}
+
+.burger-menu span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #0e4a63;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.burger-menu.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid #d8eeee;
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 1100;
+}
+
+.menu-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.menu-item {
+  width: 100%;
+  border: none;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  color: #0e4a63;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d8eeee;
+  transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+  background: #ebffff;
+  border-color: #0da7a7;
 }
 
 .reward-content {
@@ -400,6 +494,11 @@ body {
   box-shadow: 0 6px 14px rgba(13, 167, 167, 0.22);
 }
 
+.dropdown-option.disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
 .redeem-btn {
   width: 100%;
   background: #b9dede;
@@ -428,6 +527,21 @@ body {
   padding-bottom: 8px;
 }
 
+.no-brands-message {
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: center;
+  color: #0e4a63;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(13, 167, 167, 0.08);
+}
+
+.no-brands-message p {
+  margin: 6px 0;
+}
+
 @media (max-width: 480px) {
   .reward-header {
     padding: 10px 12px;
@@ -438,13 +552,32 @@ body {
     height: 40px;
   }
 
+  .header-right {
+    gap: 8px;
+  }
+
   .balance-box {
     padding: 7px 10px;
     font-size: 14px;
+    margin-right: 2px;
   }
 
   .balance-box span {
     font-size: 11px;
+  }
+
+  .burger-menu {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .burger-menu span {
+    width: 16px;
+  }
+
+  .menu-dropdown {
+    min-width: 150px;
   }
 
   .reward-content {

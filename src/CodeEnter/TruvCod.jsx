@@ -4,8 +4,9 @@ import "../CodeEnter/TruvCod.css";
 import bgImage from "../assets/CodeEnter/truvish1.jpg";
 import logo from "../assets/CodeEnter/image-removebg-preview.png";
 
-// ✅ Railway Backend URL
-const BASE_URL = "https://grateful-warmth-production-b64e.up.railway.app";
+// Railway Backend URL
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
 
 const TruvCod = ({ onSuccess }) => {
   const [code, setCode] = useState("");
@@ -26,7 +27,7 @@ const TruvCod = ({ onSuccess }) => {
         `${BASE_URL}/api/truvish/verify/${encodeURIComponent(finalCode)}`
       );
 
-      console.log("API Response:", response.data); // Debug log
+      console.log("API Response:", response.data);
 
       onSuccess({
         code: finalCode,
@@ -36,8 +37,8 @@ const TruvCod = ({ onSuccess }) => {
         clientImg: response.data.clientImg || null,
         validity: response.data.validity || null,
         clientThemeImg: response.data.clientThemeImg || null,
-        clientBrand: response.data.clientBrand || [],      // ✅ NEW
-        clientCategory: response.data.clientCategory || []  // ✅ NEW
+        clientBrand: response.data.clientBrand || [],
+        clientCategory: response.data.clientCategory || [],
       });
     } catch (error) {
       alert(error.response?.data || "Invalid code. Please check again.");
@@ -58,9 +59,10 @@ const TruvCod = ({ onSuccess }) => {
           <img src={logo} alt="Truvish Logo" className="logo" />
 
           <h2>Redeem Your TruVish Rewards Code</h2>
+
           <p>
             Use your code to get instant gift cards from Amazon, Flipkart,
-            Swiggy & more
+            Swiggy &amp; more
           </p>
 
           <label className="input-label">Enter Your Code</label>
@@ -68,10 +70,10 @@ const TruvCod = ({ onSuccess }) => {
           <div className="code-input">
             <input
               type="text"
-              placeholder="Enter Your Code"
+              placeholder="XXXX-XXXX"
               maxLength="16"
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
             />
           </div>
 

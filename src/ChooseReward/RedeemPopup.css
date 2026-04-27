@@ -151,3 +151,192 @@
   margin-bottom: 10px;        /* gap between 1,2,3,4,5 */
   line-height: 1.4;
 }
+/* ===== Overlay ===== */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 100px;
+  z-index: 2000;
+}
+
+/* ===== Popup Card ===== */
+.popup-card {
+  width: 92%;
+  max-width: 360px;
+  background: #eaf5f5;
+  border-radius: 16px;
+  padding: 14px;
+  position: relative;
+  border: 2px solid #9fd3d3;
+}
+
+/* ===== Close Button ===== */
+.popup-close {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6fa9a9;
+}
+
+/* ===== Heading ===== */
+.popup-card h3 {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0e4a63;
+}
+
+/* ===== Voucher Box ===== */
+.voucher-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+
+/* Brand Logo */
+.voucher-box img {
+  height: 44px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+/* Brand Name */
+.voucher-box h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #5f7f7f;
+  margin: 6px 0;
+}
+
+/* ===== Ticket Style Separator ===== */
+.voucher-separator {
+  position: relative;
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+}
+
+.dashed-line {
+  width: 100%;
+  border-top: 1.5px dashed #d0d0d0;
+}
+
+.cut {
+  width: 14px;
+  height: 14px;
+  background: #eaf5f5;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cut.left {
+  left: -20px;
+}
+
+.cut.right {
+  right: -20px;
+}
+
+/* ===== Amount ===== */
+.amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0da7a7;
+  margin: 10px 0;
+}
+
+/* ===== Redeem Button ===== */
+.redeem-main {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: #0da7a7;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.redeem-main:hover {
+  transform: translateY(-1px);
+}
+
+.redeem-main:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ===== Redemption Process ===== */
+.process {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.process h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0e4a63;
+}
+
+.process ol {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.process ol li {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+/* ===== Sky Blur Loader ===== */
+.redeem-loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(135, 206, 235, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.redeem-loader-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 22px;
+  padding: 26px 22px;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(30, 80, 110, 0.15);
+}
+
+.redeem-loader-box p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0e4a63;
+}

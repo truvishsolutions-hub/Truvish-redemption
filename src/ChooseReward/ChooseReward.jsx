@@ -1,92 +1,40 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import RedeemPopup from "../ChooseReward/RedeemPopup";
+import RedeemPopup from "./RedeemPopup";
 import "./ChooseReward.css";
 
-const BASE_URL = "https://grateful-warmth-production-b64e.up.railway.app";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
 
 const ChooseReward = ({
-  rewardValue,
+  rewardValue = 0,
   brandLogo,
   truvishCode,
   phone,
-  clientCategories = [],  // ✅ Default empty array
-  clientBrands = []        // ✅ Default empty array
+  clientCategories = [],
+  clientBrands = [],
+  onCodeHistory,
+  onBalanceUpdate,
 }) => {
   const [allBrands, setAllBrands] = useState([]);
+  const [brandDenominations, setBrandDenominations] = useState({});
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All");
-  const [selectedBrand, setSelectedBrand] = useState(null);
 
   const [banners, setBanners] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedBrandName, setSelectedBrandName] = useState("");
   const [selectedAmount, setSelectedAmount] = useState(null);
 
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [redeemPopupOpen, setRedeemPopupOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const dropdownRefs = useRef({});
-
-  // ✅ Function to filter denominations based on reward value
-  const getFilteredDenominations = (denominations, rewardAmount) => {
-    if (!denominations || !Array.isArray(denominations)) return [];
-
-    // Filter denominations that are less than or equal to reward amount
-    const filtered = denominations.filter(denom => denom <= rewardAmount);
-
-    // Sort ascending
-    return filtered.sort((a, b) => a - b);
-  };
-
-  // ✅ Filter brands based on client categories AND available denominations
-  const brands = useMemo(() => {
-    console.log("📊 Client Categories from API:", clientCategories);
-    console.log("💰 Reward Value:", rewardValue);
-    console.log("📦 All Brands:", allBrands);
-
-    if (!allBrands || allBrands.length === 0) {
-      return [];
-    }
-
-    // First filter by category
-    let filteredByCategory = allBrands;
-
-    if (clientCategories && clientCategories.length > 0) {
-      filteredByCategory = allBrands.filter(brand => {
-        const brandCategory = brand.inventoryVoucherCatogry?.toLowerCase();
-        const matches = clientCategories.some(cat =>
-          brandCategory === cat.toLowerCase()
-        );
-        if (matches) {
-          console.log(`✅ Brand ${brand.inventoryVoucherName} matches category ${brandCategory}`);
-        }
-        return matches;
-      });
-    } else {
-      console.log("No categories specified, checking all brands");
-    }
-
-    // ✅ SECOND FILTER: Only keep brands that have at least one denomination <= rewardValue
-    const brandsWithAvailableValues = filteredByCategory.filter(brand => {
-      const availableDenoms = getFilteredDenominations(
-        brand.inventoryVoucherDenomenation,
-        rewardValue
-      );
-      const hasAvailable = availableDenoms.length > 0;
-
-      if (!hasAvailable) {
-        console.log(`❌ Brand ${brand.inventoryVoucherName} has no values <= ${rewardValue}`);
-      } else {
-        console.log(`✅ Brand ${brand.inventoryVoucherName} has values:`, availableDenoms);
-      }
-
-      return hasAvailable;
-    });
-
-    console.log(`🎯 Final filtered ${brandsWithAvailableValues.length} brands with available values`);
-    return brandsWithAvailableValues;
-  }, [allBrands, clientCategories, rewardValue]);
+  const menuRef = useRef(null);
 
   const autoplay = useMemo(
     () =>
@@ -94,7 +42,7 @@ const ChooseReward = ({
         delay: 3500,
         stopOnInteraction: false,
         stopOnMouseEnter: true,
-        stopOnFocusIn: false
+        stopOnFocusIn: false,
       }),
     []
   );
@@ -104,7 +52,7 @@ const ChooseReward = ({
       loop: true,
       align: "start",
       dragFree: false,
-      containScroll: "keepSnaps"
+      containScroll: "keepSnaps",
     },
     [autoplay]
   );
@@ -116,6 +64,7 @@ const ChooseReward = ({
     clean = clean.replace(/\\/g, "/").replace(/ /g, "%20");
 
     const looksLikeWindowsPath = /^[A-Za-z]:\//.test(clean);
+
     if (looksLikeWindowsPath) {
       const parts = clean.split("/");
       clean = parts[parts.length - 1];
@@ -141,6 +90,37 @@ const ChooseReward = ({
   };
 
   const fullLogo = getFullUrl(brandLogo, true);
+
+  const fetchInventory = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/inventory`);
+      const data = await res.json();
+      setAllBrands(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Inventory API error:", err);
+      setAllBrands([]);
+    }
+  };
+
+  const fetchLatestBalance = async () => {
+    if (!truvishCode) return;
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/api/truvish/verify/${encodeURIComponent(truvishCode)}`
+      );
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+
+      if (data?.value != null) {
+        onBalanceUpdate?.(Number(data.value || 0));
+      }
+    } catch (error) {
+      console.error("Live balance update failed:", error);
+    }
+  };
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/admin/config`)
@@ -173,15 +153,18 @@ const ChooseReward = ({
   }, [emblaApi]);
 
   useEffect(() => {
-    console.log("📡 Fetching inventory from:", `${BASE_URL}/api/inventory`);
-    fetch(`${BASE_URL}/api/inventory`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("📦 Inventory Data Received:", data);
-        setAllBrands(data || []);
-      })
-      .catch((err) => console.error("Inventory API error:", err));
+    fetchInventory();
   }, []);
+
+  useEffect(() => {
+    if (!truvishCode) return;
+
+    fetchLatestBalance();
+
+    const interval = setInterval(fetchLatestBalance, 5000);
+
+    return () => clearInterval(interval);
+  }, [truvishCode]);
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -192,41 +175,153 @@ const ChooseReward = ({
       ) {
         setOpenDropdownId(null);
       }
+
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
+
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [openDropdownId]);
 
-  // ✅ Filter brands based on search and active tab
-  const filteredBrands = brands.filter((b) => {
+  const normalizedAllowedBrands = useMemo(() => {
+    return (clientBrands || [])
+      .filter(Boolean)
+      .map((item) => String(item).trim().toLowerCase());
+  }, [clientBrands]);
+
+  const normalizedAllowedCategories = useMemo(() => {
+    return (clientCategories || [])
+      .filter(Boolean)
+      .map((item) => String(item).trim().toLowerCase());
+  }, [clientCategories]);
+
+  const brands = useMemo(() => {
+    let filtered = Array.isArray(allBrands) ? [...allBrands] : [];
+
+    if (normalizedAllowedBrands.length > 0) {
+      filtered = filtered.filter((brand) =>
+        normalizedAllowedBrands.includes(
+          String(brand.inventoryVoucherName || "").trim().toLowerCase()
+        )
+      );
+    } else if (normalizedAllowedCategories.length > 0) {
+      filtered = filtered.filter((brand) =>
+        normalizedAllowedCategories.includes(
+          String(brand.inventoryVoucherCatogry || "").trim().toLowerCase()
+        )
+      );
+    }
+
+    return filtered;
+  }, [allBrands, normalizedAllowedBrands, normalizedAllowedCategories]);
+
+  useEffect(() => {
+    const loadDenominations = async () => {
+      const entries = await Promise.all(
+        brands.map(async (brand) => {
+          const brandName = brand.inventoryVoucherName;
+
+          try {
+            const res = await fetch(
+              `${BASE_URL}/api/voucher-inventory/denominations?brandName=${encodeURIComponent(
+                brandName
+              )}`
+            );
+
+            if (!res.ok) {
+              return [brand.inventoryId, []];
+            }
+
+            const data = await res.json();
+
+            const filtered = (Array.isArray(data) ? data : [])
+              .map((v) => Number(v))
+              .filter(
+                (v) =>
+                  !Number.isNaN(v) &&
+                  Number(v) > 0 &&
+                  Number(v) <= Number(rewardValue || 0)
+              )
+              .sort((a, b) => a - b);
+
+            return [brand.inventoryId, filtered];
+          } catch (error) {
+            console.error(`Denomination load failed for ${brandName}`, error);
+            return [brand.inventoryId, []];
+          }
+        })
+      );
+
+      setBrandDenominations(Object.fromEntries(entries));
+    };
+
+    if (brands.length > 0) {
+      loadDenominations();
+    } else {
+      setBrandDenominations({});
+    }
+  }, [brands, rewardValue]);
+
+  const filteredBrands = useMemo(() => {
     const s = search.toLowerCase();
 
-    return (
-      b.inventoryVoucherName?.toLowerCase().includes(s) &&
-      (activeTab === "All" ||
-        b.inventoryVoucherCatogry?.toLowerCase() === activeTab.toLowerCase())
-    );
-  });
+    return brands.filter((b) => {
+      const brandName = String(b.inventoryVoucherName || "").toLowerCase();
+      const brandCategory = String(
+        b.inventoryVoucherCatogry || ""
+      ).toLowerCase();
+      const availableDenominations = brandDenominations[b.inventoryId] || [];
 
-  const handleSelectValue = (inventoryId, value) => {
-    console.log(`🎯 Selected value ${value} for brand ${inventoryId}`);
-    setSelectedBrandId(inventoryId);
+      return (
+        brandName.includes(s) &&
+        availableDenominations.length > 0 &&
+        (activeTab === "All" || brandCategory === activeTab.toLowerCase())
+      );
+    });
+  }, [brands, search, activeTab, brandDenominations]);
+
+  const handleSelectValue = (brand, value) => {
+    setSelectedBrand({
+      ...brand,
+      selectedValue: Number(value),
+    });
+
+    setSelectedBrandName(brand.inventoryVoucherName);
     setSelectedAmount(Number(value));
     setOpenDropdownId(null);
   };
 
   const handleRedeem = (brand) => {
-    if (selectedBrandId !== brand.inventoryId || !selectedAmount) {
+    if (selectedBrandName !== brand.inventoryVoucherName || !selectedAmount) {
       alert("Please select a value first!");
       return;
     }
 
-    console.log(`🔄 Redeeming ${selectedAmount} from ${brand.inventoryVoucherName}`);
     setSelectedBrand({
       ...brand,
-      selectedValue: selectedAmount
+      selectedValue: selectedAmount,
     });
+
+    setRedeemPopupOpen(true);
+  };
+
+  const handleRedeemSuccess = async () => {
+    await fetchInventory();
+    await fetchLatestBalance();
+
+    setRedeemPopupOpen(false);
+    setSelectedBrand(null);
+    setSelectedBrandName("");
+    setSelectedAmount(null);
+    setOpenDropdownId(null);
+  };
+
+  const handleCodeHistoryClick = () => {
+    setMenuOpen(false);
+    onCodeHistory?.();
   };
 
   return (
@@ -245,10 +340,33 @@ const ChooseReward = ({
           )}
         </div>
 
-        <div className="balance-box">
-          ₹{rewardValue ?? 0}
-          <br />
-          <span>Available Balance</span>
+        <div className="header-right" ref={menuRef}>
+          <div className="balance-box">
+            ₹{Number(rewardValue || 0)}
+            <br />
+            <span>Available Balance</span>
+          </div>
+
+          <button
+            type="button"
+            className={`burger-menu ${menuOpen ? "active" : ""}`}
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Open menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <div className={`menu-dropdown ${menuOpen ? "show" : ""}`}>
+            <button
+              type="button"
+              className="menu-item"
+              onClick={handleCodeHistoryClick}
+            >
+              Code History
+            </button>
+          </div>
         </div>
       </div>
 
@@ -287,7 +405,7 @@ const ChooseReward = ({
         <div className="sticky-filter">
           <input
             className="search"
-            placeholder="🔍 Search brands"
+            placeholder="Search brands"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -299,6 +417,7 @@ const ChooseReward = ({
                   key={tab}
                   className={activeTab === tab ? "active" : ""}
                   onClick={() => setActiveTab(tab)}
+                  type="button"
                 >
                   {tab}
                 </button>
@@ -310,30 +429,34 @@ const ChooseReward = ({
         <div className="brand-grid">
           {filteredBrands.length === 0 ? (
             <div className="no-brands-message">
-              <p>No brands available for your reward amount</p>
-              {clientCategories.length > 0 && (
-                <p>Categories: {clientCategories.join(", ")}</p>
+              <p>No brands available for your reward amount.</p>
+
+              {clientBrands.length > 0 && (
+                <p>Allowed Brands: {clientBrands.join(", ")}</p>
               )}
-              <p>Available balance: ₹{rewardValue}</p>
-              <p className="hint-text">Try a different code with higher value</p>
+
+              {clientCategories.length > 0 && (
+                <p>Allowed Categories: {clientCategories.join(", ")}</p>
+              )}
+
+              <p>Available balance: ₹{Number(rewardValue || 0)}</p>
             </div>
           ) : (
             filteredBrands.map((b) => {
               const logoUrl = getFullUrl(b.inventoryVoucherLogoUrl, true);
               const isDropdownOpen = openDropdownId === b.inventoryId;
-              const isCurrentSelected = selectedBrandId === b.inventoryId;
+              const isCurrentSelected =
+                selectedBrandName === b.inventoryVoucherName;
               const currentValue = isCurrentSelected ? selectedAmount : null;
               const isValueSelected = !!currentValue;
-
-              // ✅ Get filtered denominations for this brand
-              const availableDenominations = getFilteredDenominations(
-                b.inventoryVoucherDenomenation,
-                rewardValue
-              );
+              const availableDenominations =
+                brandDenominations[b.inventoryId] || [];
 
               return (
                 <div
-                  className={`brand-card ${isDropdownOpen ? "dropdown-open-card" : ""}`}
+                  className={`brand-card ${
+                    isDropdownOpen ? "dropdown-open-card" : ""
+                  }`}
                   key={b.inventoryId}
                 >
                   {b.inventoryVoucherLogoUrl ? (
@@ -349,9 +472,9 @@ const ChooseReward = ({
                   <h4>{b.inventoryVoucherName}</h4>
 
                   <div
-                    className={`select-wrapper ${isValueSelected ? "selected" : ""} ${
-                      isDropdownOpen ? "open" : ""
-                    }`}
+                    className={`select-wrapper ${
+                      isValueSelected ? "selected" : ""
+                    } ${isDropdownOpen ? "open" : ""}`}
                     ref={(el) => {
                       dropdownRefs.current[b.inventoryId] = el;
                     }}
@@ -382,18 +505,24 @@ const ChooseReward = ({
                         isDropdownOpen ? "show" : ""
                       }`}
                     >
-                      {availableDenominations.map((val, i) => (
-                        <button
-                          type="button"
-                          key={i}
-                          className={`dropdown-option ${
-                            currentValue === val ? "active" : ""
-                          }`}
-                          onClick={() => handleSelectValue(b.inventoryId, val)}
-                        >
-                          INR {val}
-                        </button>
-                      ))}
+                      {availableDenominations.length === 0 ? (
+                        <div className="dropdown-option disabled">
+                          No value available
+                        </div>
+                      ) : (
+                        availableDenominations.map((val, i) => (
+                          <button
+                            type="button"
+                            key={i}
+                            className={`dropdown-option ${
+                              currentValue === val ? "active" : ""
+                            }`}
+                            onClick={() => handleSelectValue(b, val)}
+                          >
+                            INR {val}
+                          </button>
+                        ))
+                      )}
                     </div>
                   </div>
 
@@ -401,6 +530,7 @@ const ChooseReward = ({
                     className={`redeem-btn ${isValueSelected ? "enabled" : ""}`}
                     onClick={() => handleRedeem(b)}
                     disabled={!isValueSelected}
+                    type="button"
                   >
                     Redeem
                   </button>
@@ -412,11 +542,11 @@ const ChooseReward = ({
       </div>
 
       <RedeemPopup
-        brand={selectedBrand}
+        brand={redeemPopupOpen ? selectedBrand : null}
+        onClose={() => setRedeemPopupOpen(false)}
         truvishCode={truvishCode}
         phone={phone}
-        rewardValue={rewardValue}
-        onClose={() => setSelectedBrand(null)}
+        onRedeemSuccess={handleRedeemSuccess}
       />
     </div>
   );

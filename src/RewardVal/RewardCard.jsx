@@ -2,7 +2,8 @@ import React from "react";
 import "./RewardCard.css";
 import truvishLogo from "../assets/CodeEnter/image-removebg-preview.png";
 
-const BASE_URL = "https://grateful-warmth-production-b64e.up.railway.app";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
 
 const RewardCard = ({
   onChooseReward,
@@ -10,7 +11,7 @@ const RewardCard = ({
   rewardValue,
   brandLogo,
   clientThemeImg,
-  validity
+  validity,
 }) => {
   const maskPhone = (num) => {
     if (!num) return "";
@@ -68,10 +69,12 @@ const RewardCard = ({
       <div
         className="redeem-card__top-image"
         style={{
-          backgroundImage: fullThemeImageUrl ? `url(${fullThemeImageUrl})` : "none",
+          backgroundImage: fullThemeImageUrl
+            ? `url(${fullThemeImageUrl})`
+            : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
         }}
       />
 
