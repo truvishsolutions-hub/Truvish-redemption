@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./RedemptionHistory.css";
 import RedemptionHistoryDetailsPopup from "./RedemptionHistoryDetailsPopup";
-import { IoChevronBack } from "react-icons/io5";
+import { FaChevronLeft } from "react-icons/fa6";
 
 const BASE_URL =
   import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
@@ -126,7 +126,7 @@ const RedemptionHistory = ({ onBack, truvishCode, phone }) => {
     <div className="history-page">
       <div className="history-header">
         <button type="button" className="history-back-btn" onClick={onBack}>
-          <IoChevronBack size={26} />
+          <FaChevronLeft size={22} />
         </button>
 
         <h1>Redemption History</h1>
