@@ -1,11 +1,16 @@
+// RedeemPopup.jsx - FINAL UPDATED
+
 import React, { useState } from "react";
 import "./RedeemPopup.css";
 import RedeemDetailsPopup from "./RedeemDetailsPopup";
 import { TrophySpin } from "react-loading-indicators";
 import { FaRegCopy } from "react-icons/fa6";
+import { IoCheckmarkCircle } from "react-icons/io5";
 
 const BASE_URL =
   import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
+
+// const BASE_URL = "http://localhost:8080";
 
 const RedeemPopup = ({
   brand,
@@ -18,6 +23,9 @@ const RedeemPopup = ({
   const [loading, setLoading] = useState(false);
   const [showRedeemLoader, setShowRedeemLoader] = useState(false);
   const [hideMainPopup, setHideMainPopup] = useState(false);
+
+  // 🔥 NEW
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   if (!brand && !voucherDetails) return null;
 
@@ -149,7 +157,8 @@ const RedeemPopup = ({
           inventoryVoucherName:
             data?.inventoryVoucherName || brand?.inventoryVoucherName,
           inventoryVoucherBrandUrl:
-            data?.inventoryVoucherBrandUrl || brand?.inventoryVoucherBrandUrl,
+            data?.inventoryVoucherBrandUrl ||
+            brand?.inventoryVoucherBrandUrl,
           redemptionProcess:
             data?.redemptionProcess || brand?.redemptionProcess,
           truvishCode: truvishCode || "",
@@ -172,10 +181,18 @@ const RedeemPopup = ({
           redeemedValue:
             mergedVoucherDetails?.redeemedValue || brand?.selectedValue,
           redemptionProcess:
-            mergedVoucherDetails?.redemptionProcess || brand?.redemptionProcess,
+            mergedVoucherDetails?.redemptionProcess ||
+            brand?.redemptionProcess,
         });
 
         setShowRedeemLoader(false);
+
+        // 🔥 SUCCESS MESSAGE SHOW
+        setShowSuccessMessage(true);
+
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000);
 
         if (onRedeemSuccess) {
           onRedeemSuccess();
@@ -198,6 +215,20 @@ const RedeemPopup = ({
 
   return (
     <>
+      {/* 🔥 SUCCESS TOP MESSAGE */}
+      <div
+        className={`redeem-top-success ${
+          showSuccessMessage ? "redeem-show-success" : ""
+        }`}
+      >
+        <IoCheckmarkCircle />
+
+        <div>
+          <h4>Voucher Redeemed Successfully</h4>
+          <p>Your reward voucher is ready to use</p>
+        </div>
+      </div>
+
       {brand && !hideMainPopup && (
         <div className="popup-overlay">
           <div className="popup-card">
@@ -224,7 +255,9 @@ const RedeemPopup = ({
                 <span className="cut right"></span>
               </div>
 
-              <div className="amount">INR {brand?.selectedValue}</div>
+              <div className="amount">
+                INR {brand?.selectedValue}
+              </div>
 
               <button
                 className="redeem-main"
@@ -238,6 +271,7 @@ const RedeemPopup = ({
 
             <div className="process">
               <h4>Redemption Process</h4>
+
               <ol>
                 {steps.map((step, index) => (
                   <li key={index}>{step}</li>
@@ -254,6 +288,7 @@ const RedeemPopup = ({
             <TrophySpin
               color={["#1d7a76", "#27a39d", "#31ccc5", "#59d7d1"]}
             />
+
             <p>Preparing your voucher...</p>
           </div>
         </div>

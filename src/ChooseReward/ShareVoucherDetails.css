@@ -1,0 +1,399 @@
+/* =========================================
+SHARE OVERLAY
+========================================= */
+
+.share-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+/* =========================================
+BACKDROP
+========================================= */
+
+.share-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* =========================================
+BOTTOM SHEET
+========================================= */
+
+.share-sheet {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  background: #ffffff;
+
+  border-radius: 30px 30px 0 0;
+
+  padding: 18px 24px 35px;
+
+  animation: slideUp 0.35s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+SLIDE ANIMATION
+========================================= */
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+TOP SUCCESS NOTIFICATION
+========================================= */
+
+.top-success {
+  position: fixed;
+
+  top: -120px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: calc(100% - 30px);
+  max-width: 420px;
+
+  background: #ffffff;
+
+  border-radius: 22px;
+
+  padding: 16px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.12);
+
+  z-index: 10000;
+
+  transition: 0.45s ease;
+}
+
+.show-success {
+  top: 20px;
+}
+
+/* =========================================
+SUCCESS ICON
+========================================= */
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background: #1AB0B7;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+  font-weight: bold;
+
+  flex-shrink: 0;
+}
+
+.top-success h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #10213d;
+  margin-bottom: 4px;
+}
+
+.top-success p {
+  font-size: 14px;
+  color: #7d8797;
+  line-height: 1.4;
+}
+
+/* =========================================
+TOP DRAG LINE
+========================================= */
+
+.sheet-line {
+  width: 90px;
+  height: 8px;
+
+  border-radius: 50px;
+
+  background: #e4e7ee;
+
+  margin: 0 auto;
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.share-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #081b44;
+}
+
+/* =========================================
+CLOSE BUTTON
+========================================= */
+
+.close-btn {
+  width: 54px;
+  height: 54px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f1f3fa;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 30px;
+  color: #2f3a4f;
+
+  transition: 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e7ebf3;
+}
+
+.close-btn:active {
+  transform: scale(0.94);
+}
+
+/* =========================================
+FIELD WRAPPER
+========================================= */
+
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================
+LABELS
+========================================= */
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label-row label {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #3c4b63;
+}
+
+.label-row span {
+  font-size: 13px;
+  color: #9ba4b5;
+}
+
+/* =========================================
+INPUT BOX
+========================================= */
+
+.input-box {
+  height: 60px;
+
+  border: 2px solid #e6e8ef;
+  border-radius: 22px;
+
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  background: #ffffff;
+
+  transition: 0.3s ease;
+}
+
+.input-box:focus-within {
+  border-color: #1db7b7;
+
+  box-shadow:
+    0 0 0 4px rgba(29, 183, 183, 0.12);
+}
+
+.input-box svg {
+  font-size: 28px;
+  color: #97a1b3;
+}
+
+.input-box input {
+  flex: 1;
+
+  border: none;
+  outline: none;
+
+  font-size: 18px;
+  color: #374151;
+
+  background: transparent;
+}
+
+.input-box input::placeholder {
+  color: #a5adb9;
+}
+
+/* =========================================
+SEND BUTTON
+========================================= */
+
+.send-btn {
+  height: 54px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #16a6a6,
+    #1db7b7
+  );
+
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 24px rgba(29, 183, 183, 0.22);
+
+  transition: 0.2s ease;
+}
+
+.send-btn:hover {
+  transform: translateY(-1px);
+}
+
+.send-btn:active {
+  transform: scale(0.98);
+}
+
+.send-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.send-btn svg {
+  font-size: 28px;
+}
+
+/* =========================================
+INFO TEXT
+========================================= */
+
+.share-info {
+  text-align: center;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: #a0a8b8;
+
+  padding: 0 12px;
+}
+
+/* =========================================
+MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .share-sheet {
+    padding:
+      16px 18px 30px;
+  }
+
+  .share-header h2 {
+    font-size: 22px;
+  }
+
+  .input-box {
+    height: 56px;
+    border-radius: 18px;
+  }
+
+  .input-box input {
+    font-size: 16px;
+  }
+
+  .send-btn {
+    height: 52px;
+    font-size: 18px;
+  }
+
+  .top-success {
+    width: calc(100% - 20px);
+  }
+
+  .success-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 24px;
+  }
+
+  .top-success h4 {
+    font-size: 16px;
+  }
+
+  .top-success p {
+    font-size: 13px;
+  }
+}

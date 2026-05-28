@@ -25,6 +25,7 @@ const VerifyOtp = ({ phone, onChangeNumber, onOtpVerified }) => {
     }
   };
 
+
   const handlePaste = (e) => {
     const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
     if (!pastedData) return;

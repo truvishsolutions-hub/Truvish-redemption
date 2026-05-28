@@ -7,6 +7,7 @@ import logo from "../assets/CodeEnter/image-removebg-preview.png";
 // Railway Backend URL
 const BASE_URL =
   import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
+//   const BASE_URL = "http://localhost:8080";
 
 const TruvCod = ({ onSuccess }) => {
   const [code, setCode] = useState("");
