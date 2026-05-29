@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
+
 import "../CodeEnter/TruvCod.css";
+
 import bgImage from "../assets/CodeEnter/truvish1.jpg";
-import logo from "../assets/CodeEnter/image-removebg-preview.png";
+import logo from "../assets/logo/TV-BG.png";
+
+// FONT
+import "@fontsource/lato/300.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import "@fontsource/lato/900.css";
 
 // Railway Backend URL
 const BASE_URL =
-  import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
-//   const BASE_URL = "http://localhost:8080";
+  import.meta.env.VITE_API_URL ||
+  "https://truvish-backend-production.up.railway.app";
+
+// const BASE_URL = "http://localhost:8080";
 
 const TruvCod = ({ onSuccess }) => {
   const [code, setCode] = useState("");
@@ -16,7 +26,10 @@ const TruvCod = ({ onSuccess }) => {
   const handleRedeem = async () => {
     const finalCode = code.trim().toUpperCase();
 
-    if (finalCode.length !== 8 && finalCode.length !== 12) {
+    if (
+      finalCode.length !== 8 &&
+      finalCode.length !== 12
+    ) {
       alert("Please enter a valid code");
       return;
     }
@@ -25,24 +38,48 @@ const TruvCod = ({ onSuccess }) => {
       setLoading(true);
 
       const response = await axios.get(
-        `${BASE_URL}/api/truvish/verify/${encodeURIComponent(finalCode)}`
+        `${BASE_URL}/api/truvish/verify/${encodeURIComponent(
+          finalCode
+        )}`
       );
 
-      console.log("API Response:", response.data);
+      console.log(
+        "API Response:",
+        response.data
+      );
 
       onSuccess({
         code: finalCode,
+
         status: response.data.status,
-        existingPhone: response.data.phone || null,
-        value: response.data.value || null,
-        clientImg: response.data.clientImg || null,
-        validity: response.data.validity || null,
-        clientThemeImg: response.data.clientThemeImg || null,
-        clientBrand: response.data.clientBrand || [],
-        clientCategory: response.data.clientCategory || [],
+
+        existingPhone:
+          response.data.phone || null,
+
+        value:
+          response.data.value || null,
+
+        clientImg:
+          response.data.clientImg || null,
+
+        validity:
+          response.data.validity || null,
+
+        clientThemeImg:
+          response.data.clientThemeImg ||
+          null,
+
+        clientBrand:
+          response.data.clientBrand || [],
+
+        clientCategory:
+          response.data.clientCategory || [],
       });
     } catch (error) {
-      alert(error.response?.data || "Invalid code. Please check again.");
+      alert(
+        error.response?.data ||
+          "Invalid code. Please check again."
+      );
     } finally {
       setLoading(false);
     }
@@ -50,39 +87,77 @@ const TruvCod = ({ onSuccess }) => {
 
   return (
     <div className="page">
+      {/* TOP IMAGE */}
       <div
         className="top-image"
-        style={{ backgroundImage: `url(${bgImage})` }}
+        style={{
+          backgroundImage: `url(${bgImage})`,
+        }}
       />
 
+      {/* CARD */}
       <div className="card-wrapper">
         <div className="card">
-          <img src={logo} alt="Truvish Logo" className="logo" />
+          {/* LOGO SECTION */}
+          <div className="logo-wrapper">
+            <img
+              src={logo}
+              alt="Truvish Logo"
+              className="logo"
+            />
 
-          <h2>Redeem Your TruVish Rewards Code</h2>
+            <h3 className="logo-text">
+              TRUVISH
+            </h3>
+          </div>
 
+          {/* TITLE */}
+          <h2>
+            Redeem Your TruVish Rewards
+            Code
+          </h2>
+
+          {/* DESCRIPTION */}
           <p>
-            Use your code to get instant gift cards from Amazon, Flipkart,
-            Swiggy &amp; more
+            Use your code to get instant
+            gift cards from Amazon,
+            Flipkart, Swiggy &amp; more
           </p>
 
-          <label className="input-label">Enter Your Code</label>
+          {/* LABEL */}
+          <label className="input-label">
+            Enter Your Code
+          </label>
 
+          {/* INPUT */}
           <div className="code-input">
             <input
               type="text"
               placeholder="XXXX-XXXX"
               maxLength="16"
               value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              onChange={(e) =>
+                setCode(
+                  e.target.value.toUpperCase()
+                )
+              }
             />
           </div>
 
-          <button onClick={handleRedeem} disabled={loading}>
-            {loading ? "Verifying..." : "🎁 Redeem Now"}
+          {/* BUTTON */}
+          <button
+            onClick={handleRedeem}
+            disabled={loading}
+          >
+            {loading
+              ? "Verifying..."
+              : "🎁 Redeem Now"}
           </button>
 
-          <span className="trusted">Trusted by 100+ Brands</span>
+          {/* FOOTER */}
+          <span className="trusted">
+            Trusted by 100+ Brands
+          </span>
         </div>
       </div>
     </div>
