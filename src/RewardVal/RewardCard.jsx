@@ -1,9 +1,12 @@
 import React from "react";
 import "./RewardCard.css";
-import truvishLogo from "../assets/CodeEnter/image-removebg-preview.png";
+
+import truvishLogo from "../assets/logo/TV-BG.png";
 
 const BASE_URL =
-  import.meta.env.VITE_API_URL || "https://truvish-backend-production.up.railway.app";
+  import.meta.env.VITE_API_URL ||
+  "https://truvish-backend-production.up.railway.app";
+
 // const BASE_URL = "http://localhost:8080";
 
 const RewardCard = ({
@@ -16,21 +19,31 @@ const RewardCard = ({
 }) => {
   const maskPhone = (num) => {
     if (!num) return "";
+
     const digits = String(num).replace(/\D/g, "");
 
-    if (digits.length < 7) return String(num);
+    if (digits.length < 7) {
+      return String(num);
+    }
 
-    return digits.slice(0, 3) + "****" + digits.slice(-3);
+    return (
+      digits.slice(0, 3) +
+      "****" +
+      digits.slice(-3)
+    );
   };
 
-  const makeFullUrl = (url, isUpload = false) => {
+  const makeFullUrl = (url) => {
     if (!url) return "";
 
-    let clean = String(url).trim().replace(/['"]/g, "");
+    let clean = String(url)
+      .trim()
+      .replace(/['"]/g, "");
 
-    // windows local path ho to filename nikal do
     clean = clean.replace(/\\/g, "/");
-    const looksLikeWindowsPath = /^[A-Za-z]:\//.test(clean);
+
+    const looksLikeWindowsPath =
+      /^[A-Za-z]:\//.test(clean);
 
     if (looksLikeWindowsPath) {
       const parts = clean.split("/");
@@ -39,92 +52,135 @@ const RewardCard = ({
 
     clean = clean.replace(/ /g, "%20");
 
-    // already full url
-    if (clean.startsWith("http://") || clean.startsWith("https://")) {
+    if (
+      clean.startsWith("http://") ||
+      clean.startsWith("https://")
+    ) {
       return clean;
     }
 
-    // already /uploads/...
-    if (clean.startsWith("/uploads/")) {
-      return `${BASE_URL}${clean}`;
-    }
-
-    // normal relative path
     if (clean.startsWith("/")) {
       return `${BASE_URL}${clean}`;
-    }
-
-    // uploaded file only filename aaya ho
-    if (isUpload) {
-      return `${BASE_URL}/uploads/${clean}`;
     }
 
     return `${BASE_URL}/uploads/${clean}`;
   };
 
-  const fullThemeImageUrl = makeFullUrl(clientThemeImg, false);
-  const fullBrandLogoUrl = makeFullUrl(brandLogo, true);
+  const fullThemeImageUrl =
+    makeFullUrl(clientThemeImg);
+
+  const fullBrandLogoUrl =
+    makeFullUrl(brandLogo);
 
   return (
     <div className="redeem-card">
+
+      {/* TOP IMAGE */}
       <div
         className="redeem-card__top-image"
         style={{
-          backgroundImage: fullThemeImageUrl
-            ? `url(${fullThemeImageUrl})`
-            : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          backgroundImage:
+            fullThemeImageUrl
+              ? `url(${fullThemeImageUrl})`
+              : "none",
         }}
       />
 
+      {/* CARD */}
       <div className="redeem-card__card-wrapper">
         <div className="redeem-card__card">
-          <div className="redeem-card__logo-wrap">
-            <img
-              src={fullBrandLogoUrl || truvishLogo}
-              alt="Brand Logo"
-              className="redeem-card__logo"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = truvishLogo;
-              }}
-            />
+
+          {/* TOP LOGO */}
+          <div className="redeem-card__logo-wrapper">
+
+           <img
+             src={
+               fullBrandLogoUrl ||
+               truvishLogo
+             }
+             alt="Logo"
+             className={
+               fullBrandLogoUrl
+                 ? "redeem-card__logo redeem-card__logo--client"
+                 : "redeem-card__logo"
+             }
+             onError={(e) => {
+               e.currentTarget.onerror = null;
+               e.currentTarget.src =
+                 truvishLogo;
+             }}
+           />
+
+           {!fullBrandLogoUrl && (
+             <h3 className="redeem-card__logo-text">
+               TRUVISH
+             </h3>
+           )}
+
+            {!fullBrandLogoUrl && (
+              <h3 className="redeem-card__logo-text">
+                TRUVISH
+              </h3>
+            )}
+
           </div>
 
-          <h2 className="redeem-card__title">You Have Unlocked</h2>
+          {/* TITLE */}
+          <h2 className="redeem-card__title">
+            You have unlocked
+          </h2>
 
-          <div className="redeem-card__amount">₹{rewardValue ?? 0}</div>
+          {/* AMOUNT */}
+          <div className="redeem-card__amount">
+            ₹{rewardValue ?? 0}
+          </div>
 
-          <p className="redeem-card__sub-text">TruVish Reward Value!</p>
-
-          <p className="redeem-card__desc">
-            Redeem your reward instantly on 100+ Brands
+          {/* SUB TEXT */}
+          <p className="redeem-card__sub-text">
+            Truvish reward value!
           </p>
 
+          {/* DESCRIPTION */}
+          <p className="redeem-card__desc">
+            Redeem your reward instantly on
+            100+ brands
+          </p>
+
+          {/* VERIFIED */}
           <div className="redeem-card__verified">
-            Phone Verified +91 {maskPhone(phone)} ✔
+            Phone verified +91{" "}
+            {maskPhone(phone)} ✔
           </div>
 
+          {/* BUTTON */}
           <button
             className="redeem-card__primary-btn"
             onClick={onChooseReward}
           >
-            Choose My Reward
+            Choose my reward
           </button>
 
+          {/* VALIDITY */}
           <span className="redeem-card__hint">
-            Valid for {validity ?? 90} Months
+            Valid for {validity ?? 90} months
           </span>
+
         </div>
       </div>
 
-      <img
-        src={truvishLogo}
-        alt="TruVish"
-        className="redeem-card__bottom-logo"
-      />
+      {/* BOTTOM LOGO */}
+      <div className="redeem-card__bottom-wrapper">
+        <img
+          src={truvishLogo}
+          alt="Truvish"
+          className="redeem-card__bottom-logo"
+        />
+
+        <h3 className="redeem-card__bottom-text">
+          TRUVISH
+        </h3>
+      </div>
+
     </div>
   );
 };

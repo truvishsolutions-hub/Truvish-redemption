@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import "../CodeEnter/TruvCod.css";
 
 import bgImage from "../assets/CodeEnter/truvish1.jpg";
 import logo from "../assets/logo/TV-BG.png";
 
-// FONT
+// Fonts
 import "@fontsource/lato/300.css";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
 
-// Railway Backend URL
+// Backend URL
 const BASE_URL =
   import.meta.env.VITE_API_URL ||
   "https://truvish-backend-production.up.railway.app";
@@ -23,13 +22,12 @@ const TruvCod = ({ onSuccess }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Redeem Handler
   const handleRedeem = async () => {
     const finalCode = code.trim().toUpperCase();
 
-    if (
-      finalCode.length !== 8 &&
-      finalCode.length !== 12
-    ) {
+    // Validation
+    if (finalCode.length !== 8 && finalCode.length !== 12) {
       alert("Please enter a valid code");
       return;
     }
@@ -38,50 +36,35 @@ const TruvCod = ({ onSuccess }) => {
       setLoading(true);
 
       const response = await axios.get(
-        `${BASE_URL}/api/truvish/verify/${encodeURIComponent(
-          finalCode
-        )}`
+        `${BASE_URL}/api/truvish/verify/${encodeURIComponent(finalCode)}`
       );
 
-      console.log(
-        "API Response:",
-        response.data
-      );
+      console.log("API Response:", response.data);
 
       onSuccess({
         code: finalCode,
-
         status: response.data.status,
-
-        existingPhone:
-          response.data.phone || null,
-
-        value:
-          response.data.value || null,
-
-        clientImg:
-          response.data.clientImg || null,
-
-        validity:
-          response.data.validity || null,
-
-        clientThemeImg:
-          response.data.clientThemeImg ||
-          null,
-
-        clientBrand:
-          response.data.clientBrand || [],
-
-        clientCategory:
-          response.data.clientCategory || [],
+        existingPhone: response.data.phone || null,
+        value: response.data.value || null,
+        clientImg: response.data.clientImg || null,
+        validity: response.data.validity || null,
+        clientThemeImg: response.data.clientThemeImg || null,
+        clientBrand: response.data.clientBrand || [],
+        clientCategory: response.data.clientCategory || [],
       });
     } catch (error) {
       alert(
-        error.response?.data ||
-          "Invalid code. Please check again."
+        error.response?.data || "Invalid code. Please check again."
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Enter Key Support
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleRedeem();
     }
   };
 
@@ -98,7 +81,8 @@ const TruvCod = ({ onSuccess }) => {
       {/* CARD */}
       <div className="card-wrapper">
         <div className="card">
-          {/* LOGO SECTION */}
+
+          {/* LOGO */}
           <div className="logo-wrapper">
             <img
               src={logo}
@@ -106,27 +90,21 @@ const TruvCod = ({ onSuccess }) => {
               className="logo"
             />
 
-            <h3 className="logo-text">
-              TRUVISH
-            </h3>
+            <h3 className="logo-text">TRUVISH</h3>
           </div>
 
           {/* TITLE */}
-          <h2>
-            Redeem Your TruVish Rewards
-            Code
-          </h2>
+          <h2>Redeem your truvish rewards code</h2>
 
           {/* DESCRIPTION */}
           <p>
-            Use your code to get instant
-            gift cards from Amazon,
-            Flipkart, Swiggy &amp; more
+            Use your code to get instant gift cards from
+            Amazon, Flipkart, Swiggy & more
           </p>
 
           {/* LABEL */}
           <label className="input-label">
-            Enter Your Code
+            Enter your code
           </label>
 
           {/* INPUT */}
@@ -134,13 +112,12 @@ const TruvCod = ({ onSuccess }) => {
             <input
               type="text"
               placeholder="XXXX-XXXX"
-              maxLength="16"
+              maxLength={16}
               value={code}
               onChange={(e) =>
-                setCode(
-                  e.target.value.toUpperCase()
-                )
+                setCode(e.target.value.toUpperCase())
               }
+              onKeyDown={handleKeyPress}
             />
           </div>
 
@@ -149,14 +126,12 @@ const TruvCod = ({ onSuccess }) => {
             onClick={handleRedeem}
             disabled={loading}
           >
-            {loading
-              ? "Verifying..."
-              : "🎁 Redeem Now"}
+            {loading ? "Verifying..." : "🎁 Redeem now"}
           </button>
 
           {/* FOOTER */}
           <span className="trusted">
-            Trusted by 100+ Brands
+            Trusted by 100+ brands
           </span>
         </div>
       </div>

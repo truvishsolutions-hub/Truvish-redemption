@@ -1,160 +1,312 @@
-/* ROOT — FULL ISOLATION */
+.verify-otp * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  font-family: "Lato", sans-serif;
+}
+
+/* ========================= */
+/* PAGE */
+/* ========================= */
+
 .verify-otp {
   min-height: 100vh;
+
   background: #cfe4e6;
-  font-family: "Poppins", sans-serif;
 }
 
+/* ========================= */
 /* TOP IMAGE */
-.verify-otp .verify-otp__top-image {
+/* ========================= */
+
+.verify-otp__top-image {
   height: 38vh;
+
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* ========================= */
 /* CARD POSITION */
-.verify-otp .verify-otp__card-wrapper {
+/* ========================= */
+
+.verify-otp__card-wrapper {
   display: flex;
   justify-content: center;
+
   margin-top: -50px;
+
   padding: 0 16px 40px;
 }
 
+/* ========================= */
 /* CARD */
-.verify-otp .verify-otp__card {
+/* ========================= */
+
+.verify-otp__card {
   width: 100%;
   max-width: 360px;
-  background: #fff;
+
+  background: #ffffff;
+
   border-radius: 16px;
+
   padding: 24px;
+
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+  box-shadow: 0 10px 30px
+    rgba(0, 0, 0, 0.15);
 }
 
+/* ========================= */
+/* LOGO SECTION */
+/* ========================= */
+
+.verify-otp__logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+/* ========================= */
 /* LOGO */
-.verify-otp .verify-otp__logo {
-  width: 150px;
-  margin-bottom: 4px;
+/* ========================= */
+
+.verify-otp__logo {
+  width: 75px;
+
+  object-fit: contain;
+
+  margin-bottom: 0;
 }
 
+/* ========================= */
+/* LOGO TEXT */
+/* ========================= */
+
+.verify-otp__logo-text {
+  color: #1d4864;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  margin-top: 1px;
+}
+
+/* ========================= */
 /* TITLE */
-.verify-otp .verify-otp__title {
-  font-size: 22px;
-  color: #0E4A63; /* Deep Teal Blue */
-  margin-bottom: 8px;
+/* ========================= */
+
+.verify-otp__title {
+  font-size: 20px;
+
+  color: #0e4a63;
+
+  line-height: 1.35;
+
+  margin-top: 12px;
+  margin-bottom: 10px;
+
   font-weight: 700;
 }
 
+/* ========================= */
 /* SUB TEXT */
-.verify-otp .verify-otp__sub-text {
+/* ========================= */
+
+.verify-otp__sub-text {
   font-size: 14px;
-  color: #1D2E39; /* Dark Slate Grey */
-  margin-bottom: 22px;
-}
 
-/* LABEL */
-.verify-otp .verify-otp__label {
-  display: block;
-  text-align: left;
-  font-size: 15px;
+  color: #555;
+
+  line-height: 1.5;
+
+  margin-bottom: 20px;
+
   font-weight: 500;
-  color: #0E4A63; /* Deep Teal Blue */
-  margin-bottom: 8px;
 }
 
+/* ========================= */
+/* LABEL */
+/* ========================= */
+
+.verify-otp__label {
+  display: block;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #0e4a63;
+
+  margin-bottom: 8px;
+
+  padding-left: 5px;
+}
+
+/* ========================= */
 /* OTP INPUT WRAPPER */
-.verify-otp .verify-otp__inputs {
+/* ========================= */
+
+.verify-otp__inputs {
   display: flex;
   justify-content: center;
+
   gap: 5px;
-  margin-bottom: 8px;
+
+  margin-bottom: 10px;
 }
 
+/* ========================= */
 /* OTP INPUT */
-.verify-otp .verify-otp__inputs input {
+/* ========================= */
+
+.verify-otp__inputs input {
   width: 68px;
   height: 49px;
+
   border-radius: 5px;
+
   border: 1px solid #d1d5db;
+
   text-align: center;
+
   outline: none;
+
   background: #fff;
 
   font-size: 22px;
-  font-weight: 800;
-  color: #0E4A63; /* Deep Teal Blue */
+  font-weight: 900;
+
+  color: #0e4a63;
+
   letter-spacing: 1px;
-  font-family: "Roboto Mono", monospace;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* FOCUS / HOVER */
-.verify-otp .verify-otp__inputs input:focus,
-.verify-otp .verify-otp__inputs input:hover {
-  border-color: #1AB0B7; /* Cyan Teal */
-  box-shadow: 0 0 0 1px rgba(26, 176, 183, 0.4);
+/* ========================= */
+/* INPUT FOCUS */
+/* ========================= */
+
+.verify-otp__inputs input:focus,
+.verify-otp__inputs input:hover {
+  border-color: #1ab0b7;
+
+  box-shadow: 0 0 0 1px
+    rgba(26, 176, 183, 0.4);
 }
 
+/* ========================= */
 /* SENT TEXT */
-.verify-otp .verify-otp__sent {
+/* ========================= */
+
+.verify-otp__sent {
   display: block;
+
   text-align: left;
+
   font-size: 12px;
-  color: #1AB0B7; /* Cyan Teal */
+  font-weight: 700;
+
+  color: #1ab0b7;
+
   margin-bottom: 18px;
-  font-weight: 500;
 }
 
-/* PRIMARY BUTTON */
-.verify-otp .verify-otp__primary-btn {
+/* ========================= */
+/* VERIFY BUTTON */
+/* ========================= */
+
+.verify-otp__primary-btn {
   width: 100%;
+
   padding: 14px;
+
   background: #1aa6a6;
+
   color: #fff;
+
   border: none;
+
   border-radius: 10px;
+
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+
   cursor: pointer;
+
   margin-bottom: 16px;
+
+  transition: 0.2s ease;
 }
 
-.verify-otp .verify-otp__primary-btn:hover {
+.verify-otp__primary-btn:hover {
   background: #148c8c;
 }
 
+/* ========================= */
 /* RESEND */
-.verify-otp .verify-otp__resend {
+/* ========================= */
+
+.verify-otp__resend {
   all: unset;
+
   width: 100%;
+
   display: block;
+
   text-align: center;
-  color: #0E4A63; /* Deep Teal Blue */
+
+  color: #0e4a63;
+
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
+
   cursor: pointer;
+
   margin-bottom: 8px;
 }
 
-.verify-otp .verify-otp__resend:hover {
-  color: #1AB0B7; /* Cyan Teal */
+.verify-otp__resend:hover {
+  color: #1ab0b7;
+
   text-decoration: underline;
 }
 
+/* ========================= */
 /* CHANGE NUMBER */
-.verify-otp .verify-otp__change {
+/* ========================= */
+
+.verify-otp__change {
   all: unset;
+
   width: 100%;
+
   display: block;
+
   text-align: center;
-  color: #1D2E39; /* Dark Slate Grey */
+
+  color: #1d2e39;
+
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
+
   cursor: pointer;
 }
 
-.verify-otp .verify-otp__change:hover {
-  color: #1AB0B7; /* Cyan Teal */
+.verify-otp__change:hover {
+  color: #1ab0b7;
+
   text-decoration: underline;
 }

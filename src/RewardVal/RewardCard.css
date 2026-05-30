@@ -1,115 +1,218 @@
-/* REMOVE ANY WHITE EDGE */
-html, body {
+/* ========================= */
+/* RESET */
+/* ========================= */
+
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+html,
+body {
   background: #cfe4e6;
 }
 
+/* ========================= */
 /* ROOT */
+/* ========================= */
+
 .redeem-card {
   min-height: 100vh;
   background: #cfe4e6;
-  font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
 
+/* ========================= */
 /* TOP IMAGE */
+/* ========================= */
+
 .redeem-card__top-image {
   height: 38vh;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* ========================= */
 /* CARD WRAPPER */
+/* ========================= */
+
 .redeem-card__card-wrapper {
   display: flex;
   justify-content: center;
   margin-top: -60px;
-  padding: 0 16px 40px;
+  padding: 0 16px;
 }
 
+/* ========================= */
 /* CARD */
+/* ========================= */
+
 .redeem-card__card {
   width: 100%;
   max-width: 360px;
+
   background: #ffffff;
+
   border-radius: 18px;
-  padding: 18px 24px 24px;
+
+  padding: 24px 24px 42px;
+
   text-align: center;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================= */
+/* TOP LOGO */
+/* ========================= */
+
+.redeem-card__logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 
-/* 🔥 LOGO – PERFECT CIRCLE (EDGE TO EDGE) */
+/* DEFAULT LOGO (TRUVISH) */
+
 .redeem-card__logo {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+.redeem-card__logo--client {
   width: 100px;
   height: 100px;
 
-  border-radius: 50%;      /* circle */
-  object-fit: cover;       /* full fill (NO GAP) */
+  border-radius: 50%;
 
-  display: block;
-  margin: 6px auto 12px;
+  object-fit: cover;
+  object-position: center;
 
-  padding: 0;
-  border: none;
-  background: transparent;
+  background: #ffffff;
+
+  border: 1px solid #ffffff;
+
+  padding: 6px;
+
+
 }
 
+.redeem-card__logo-text {
+  color: #1d4864;
 
+  font-size: 15px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  margin-top: 2px;
+}
+
+/* ========================= */
 /* TITLE */
+/* ========================= */
+
 .redeem-card__title {
   font-size: 22px;
+  font-weight: 700;
+
   color: #0e4a63;
-  margin: 0 0 10px;
-  font-weight: 600;
+
+  margin-bottom: 10px;
 }
 
+/* ========================= */
 /* AMOUNT */
+/* ========================= */
+
 .redeem-card__amount {
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 900;
+
   color: #1aa6a6;
+
   margin-bottom: 8px;
 }
 
+/* ========================= */
 /* SUB TEXT */
+/* ========================= */
+
 .redeem-card__sub-text {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 700;
+
   color: #0e4a63;
+
   margin-bottom: 6px;
 }
 
-/* DESC */
+/* ========================= */
+/* DESCRIPTION */
+/* ========================= */
+
 .redeem-card__desc {
   font-size: 14px;
+
   color: #666;
+
+  line-height: 1.5;
+
   margin-bottom: 18px;
-  line-height: 1.4;
 }
 
+/* ========================= */
 /* VERIFIED */
+/* ========================= */
+
 .redeem-card__verified {
   border: 1px solid #bfe7e7;
-  padding: 9px;
+
+  padding: 10px;
+
   border-radius: 8px;
+
   font-size: 14px;
+  font-weight: 700;
+
   color: #1aa6a6;
-  margin-bottom: 14px;
+
+  margin-bottom: 16px;
 }
 
-/* PRIMARY BUTTON */
+/* ========================= */
+/* BUTTON */
+/* ========================= */
+
 .redeem-card__primary-btn {
   width: 100%;
+
   padding: 13px;
+
   background: #1aa6a6;
-  color: white;
+
+  color: #ffffff;
+
   border: none;
+
   border-radius: 10px;
+
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+
   cursor: pointer;
+
+  transition: 0.2s ease;
+
   margin-bottom: 12px;
 }
 
@@ -117,17 +220,50 @@ html, body {
   background: #148c8c;
 }
 
-/* HINT */
+/* ========================= */
+/* VALIDITY */
+/* ========================= */
+
 .redeem-card__hint {
   display: block;
+
   font-size: 12px;
+  font-weight: 700;
+
   color: #888;
-  margin-bottom: 4px;
 }
 
+/* ========================= */
 /* BOTTOM LOGO */
+/* ========================= */
+
+.redeem-card__bottom-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+
+  padding-bottom: 20px;
+}
+
 .redeem-card__bottom-logo {
-  width: 72px;
+  width: 75px;
+  height: 75px;
+
+  object-fit: contain;
+
   display: block;
-  margin: -26px auto 16px;
+}
+
+.redeem-card__bottom-text {
+  color: #1d4864;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  margin-top: 2px;
 }
